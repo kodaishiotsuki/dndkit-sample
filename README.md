@@ -2,11 +2,14 @@ Multi-column drag-and-drop implementation with Next.js (TypeScript) + dnd kit.
  
 # DEMO
  
-"hoge"の魅力が直感的に伝えわるデモ動画や図解を載せる
- 
+![](https://storage.googleapis.com/zenn-user-upload/2e2bfff0b75e-20221114.gif)
+
 # Features
  
 Use drag-and-drop library dnd kit
+<img width="1280" alt="twitter-social-banner" src="https://user-images.githubusercontent.com/92905502/201656361-212fa81a-71f6-4acc-a70f-029545123d3c.png">
+
+
 
 <https://dndkit.com/>
  
