@@ -17,22 +17,28 @@ import SortableContainer from "./SortableContainer";
 import Item from "./Item";
 
 const Contaienr = () => {
+  // ドラッグ&ドロップでソート可能なリスト
   const [items, setItems] = useState<{
     [key: string]: string[];
   }>({
-    root: ["1", "2", "3"],
-    container1: ["4", "5", "6"],
-    container2: ["7", "8", "9"],
-    container3: [],
+    container1: ["A", "B", "C"],
+    container2: ["D", "E", "F"],
+    container3: ["G", "H", "I"],
+    container4: [],
   });
+
+  //DragOverlay用のid
   const [activeId, setActiveId] = useState<UniqueIdentifier>();
 
+  // ドラッグの開始、移動、終了などにどのような入力を許可するかを決めるprops
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
+  //各コンテナ取得関数
   const findContainer = (id: UniqueIdentifier) => {
     if (id in items) {
       return id;
@@ -42,20 +48,26 @@ const Contaienr = () => {
     );
   };
 
+  // ドラッグ開始時に発火する関数
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
-    const { id } = active;
+    //ドラッグしたリソースのid
+    const id = active.id.toString();
     setActiveId(id);
   };
 
+  //ドラッグ可能なアイテムがドロップ可能なコンテナの上に移動時に発火する関数
   const handleDragOver = (event: DragOverEvent) => {
     const { active, over } = event;
+    //ドラッグしたリソースのid
     const id = active.id.toString();
+    //ドロップした場所にあったリソースのid
     const overId = over?.id;
 
     if (!overId) return;
 
-    // Find the containers
+    // ドラッグ、ドロップ時のコンテナ取得
+    // container1,container2,container3,container4のいずれかを持つ
     const activeContainer = findContainer(id);
     const overContainer = findContainer(over?.id);
 
@@ -68,23 +80,21 @@ const Contaienr = () => {
     }
 
     setItems((prev) => {
+      // 移動元のコンテナの要素配列を取得
       const activeItems = prev[activeContainer];
+      // 移動先のコンテナの要素配列を取得
       const overItems = prev[overContainer];
 
-      // Find the indexes for the items
+      // 配列のインデックス取得
       const activeIndex = activeItems.indexOf(id);
       const overIndex = overItems.indexOf(overId.toString());
 
       let newIndex;
       if (overId in prev) {
+        // We're at the root droppable of a container
         newIndex = overItems.length + 1;
       } else {
-        const activeTop = active.rect.current.translated?.top ?? 0;
-
-        const isBelowLastItem =
-          over &&
-          overIndex === overItems.length - 1 &&
-          activeTop > over.rect.top + over.rect.height;
+        const isBelowLastItem = over && overIndex === overItems.length - 1;
 
         const modifier = isBelowLastItem ? 1 : 0;
 
@@ -105,15 +115,20 @@ const Contaienr = () => {
     });
   };
 
+  // ドラッグ終了時に発火する関数
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+    //ドラッグしたリソースのid
     const id = active.id.toString();
+    //ドロップした場所にあったリソースのid
     const overId = over?.id;
 
     if (!overId) return;
 
+    // ドラッグ、ドロップ時のコンテナ取得
+    // container1,container2,container3,container4のいずれかを持つ
     const activeContainer = findContainer(id);
-    const overContainer = findContainer(overId);
+    const overContainer = findContainer(over?.id);
 
     if (
       !activeContainer ||
@@ -123,6 +138,7 @@ const Contaienr = () => {
       return;
     }
 
+    // 配列のインデックス取得
     const activeIndex = items[activeContainer].indexOf(id);
     const overIndex = items[overContainer].indexOf(overId.toString());
 
@@ -136,7 +152,6 @@ const Contaienr = () => {
         ),
       }));
     }
-
     setActiveId(undefined);
   };
 
@@ -149,22 +164,28 @@ const Contaienr = () => {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <SortableContainer id="root" items={items.root} label="Column1" />
+        {/* SortableContainer */}
         <SortableContainer
           id="container1"
-          label="Column2"
           items={items.container1}
+          label="container1"
         />
         <SortableContainer
           id="container2"
-          label="Column3"
+          label="container2"
           items={items.container2}
         />
         <SortableContainer
           id="container3"
-          label="Column4"
+          label="container3"
           items={items.container3}
         />
+        <SortableContainer
+          id="container4"
+          label="container4"
+          items={items.container4}
+        />
+        {/* DragOverlay */}
         <DragOverlay>{activeId ? <Item id={activeId} /> : null}</DragOverlay>
       </DndContext>
     </div>

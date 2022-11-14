@@ -1,26 +1,23 @@
-import React from 'react'
-import { useDroppable } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import SortableItem from './SortableItem'
+import { useDroppable } from "@dnd-kit/core";
+import { rectSortingStrategy, SortableContext } from "@dnd-kit/sortable";
+import SortableItem from "./SortableItem";
 
-interface ISortableContainer {
-  id: string
-  items: any
-  label: string
-}
-
-const SortableContainer = ({ id, items, label }: ISortableContainer) => {
+const SortableContainer = ({
+  id,
+  items,
+  label,
+}: {
+  id: string;
+  items: string[];
+  label: string;
+}) => {
   const { setNodeRef } = useDroppable({
     id,
-  })
+  });
   return (
     <div className="w-[calc(33%-5px)]">
       <h3 className="text-xl font-bold text-center">{label}</h3>
-      <SortableContext
-        id={id}
-        items={items}
-        strategy={verticalListSortingStrategy}
-      >
+      <SortableContext id={id} items={items} strategy={rectSortingStrategy}>
         <div
           ref={setNodeRef}
           className="w-full border-2 border-gray-500/75 p-5 mt-2 rounded-md"
@@ -31,7 +28,7 @@ const SortableContainer = ({ id, items, label }: ISortableContainer) => {
         </div>
       </SortableContext>
     </div>
-  )
-}
+  );
+};
 
-export default SortableContainer
+export default SortableContainer;
