@@ -1,4 +1,4 @@
-Multi-column drag-and-drop implementation with Next.js (TypeScript) + dnd kit.
+### Multi-column drag-and-drop implementation with Next.js (TypeScript) + dnd kit.
  
 # DEMO
  
@@ -6,7 +6,7 @@ Multi-column drag-and-drop implementation with Next.js (TypeScript) + dnd kit.
 
 # Features
  
-Use drag-and-drop library dnd kit
+### Use drag-and-drop library dnd kit
 <img width="1280" alt="twitter-social-banner" src="https://user-images.githubusercontent.com/92905502/201656361-212fa81a-71f6-4acc-a70f-029545123d3c.png">
 
 
