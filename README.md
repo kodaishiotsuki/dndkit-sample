@@ -30,8 +30,9 @@ npm i @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 # Usage
  
 ```bash
-git clone https://github.com/hoge/~
+git clone git@github.com:kodaishiotsuki/dndkit-sample.git
 cd dndkit-sample
-python demo.py
+npm i
+npm run dev
 ```
  
