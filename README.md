@@ -8,7 +8,7 @@ Multi-column drag-and-drop implementation with Next.js (TypeScript) + dnd kit.
  
 Use drag-and-drop library dnd kit
 
-https://dndkit.com/
+<https://dndkit.com/>
  
 # Requirement
 * next 13.0.3
